@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ExtendedAssignment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="contactName">SURAJ KUMAR</string>
+    <string name="contactNo">7233032955</string>
+    <string name="contactEmail">surajbaranwal56@gmail.com</string>
+    <string name="Name">Enter your name, please</string>
+    <string name="Email">Enter your email, please</string>
+    <string name="phoneNo">Enter your phoneNo, please</string>
+    <string name="ADD">Add</string>
+</resources>
