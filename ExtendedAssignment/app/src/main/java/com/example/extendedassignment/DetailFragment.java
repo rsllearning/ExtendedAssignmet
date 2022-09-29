@@ -16,16 +16,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.extendedassignment.databinding.FragmentDetailBinding;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class DetailFragment extends Fragment {
-    private ImageButton ibCall,ibGmail;
+    FragmentDetailBinding binding;
     private DetailViewModel detailViewModel;
-    private TextView name,phoneNo,email;
-    private Button buttonUpdate,buttonDelete ;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -62,17 +63,12 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_detail, container, false);
+        binding=FragmentDetailBinding.inflate(inflater,container,false);
+
         // creating an instance of detailViewModel, for interaction b/w fragment and repository
         detailViewModel=new ViewModelProvider(this).get(DetailViewModel.class);
-        name=view.findViewById(R.id.tvDetailName);
-        phoneNo=view.findViewById(R.id.tvDetailPhoneNo);
-        email=view.findViewById(R.id.tvDetailEmail);
-        buttonUpdate=view.findViewById(R.id.btnUpdate);
-        buttonDelete=view.findViewById(R.id.btnDelete);
-        ibGmail=view.findViewById(R.id.ibGmail);
-        ibCall=view.findViewById(R.id.ibCall);
-        ibGmail.setOnClickListener(new View.OnClickListener() {
+
+        binding.ibGmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email[]=new String[1];
@@ -83,7 +79,7 @@ public class DetailFragment extends Fragment {
                 startActivity(Intent.createChooser(intent, "Choose an email client"));
             }
         });
-        ibCall.setOnClickListener(new View.OnClickListener() {
+        binding.ibCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String PhoneNo=mParam1.getPhoneNo();
@@ -91,7 +87,7 @@ public class DetailFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+        binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment fragment=InsertFragment.newInstance("updateMode",mParam1);
@@ -99,7 +95,7 @@ public class DetailFragment extends Fragment {
                 ft.replace(R.id.fragmentContainer,fragment).addToBackStack(null).commit();
             }
         });
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
+        binding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                   detailViewModel.deleteAll();
@@ -111,9 +107,9 @@ public class DetailFragment extends Fragment {
         });
 
         // inflating data received from MainFragment
-        name.setText(mParam1.getName());
-        phoneNo.setText(mParam1.getPhoneNo());
-        email.setText(mParam1.getEmail());
-        return view;
+        binding.tvDetailName.setText(mParam1.getName());
+        binding.tvDetailPhoneNo.setText(mParam1.getPhoneNo());
+        binding.tvDetailEmail.setText(mParam1.getEmail());
+        return binding.getRoot();
     }
 }

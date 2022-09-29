@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.extendedassignment.databinding.FragmentInsertBinding;
+
 import java.util.List;
 
 /**
@@ -23,10 +25,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class InsertFragment extends Fragment {
+     FragmentInsertBinding binding;
      private Contact contact;
      private InsertViewModel insertViewModel;
-     private Button button;
-     private EditText name,phoneNo,email;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,28 +71,26 @@ public class InsertFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding=FragmentInsertBinding.inflate(inflater,container,false);
         View view=inflater.inflate(R.layout.fragment_insert, container, false);
         insertViewModel = new ViewModelProvider(this).get(InsertViewModel.class);
-        button = view.findViewById(R.id.btnSubmit);
-        name = view.findViewById(R.id.evName);
-        phoneNo = view.findViewById(R.id.evPhoneNo);
-        email = view.findViewById(R.id.evEmail);
+
         // we are using @mParam1 to identify whether it is updateMode or insertMode,
         // because we are using same fragment for updating the @Contact as well as inserting @Contact
         String type=mParam1;
         if(type.equals("updateMode")){
             //update data
             getActivity().setTitle("update contact");
-            name.setText(mParam2.getName());
-            email.setText(mParam2.getEmail());
-            phoneNo.setText(mParam2.getPhoneNo());
-            button.setText("Update");
-            button.setOnClickListener(new View.OnClickListener() {
+            binding.evName.setText(mParam2.getName());
+            binding.evEmail.setText(mParam2.getEmail());
+            binding.evPhoneNo.setText(mParam2.getPhoneNo());
+            binding.btnSubmit.setText("Update");
+            binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String na=name.getText().toString();
-                    String em=email.getText().toString();
-                    String ph=phoneNo.getText().toString();
+                    String na=binding.evName.getText().toString();
+                    String em=binding.evEmail.getText().toString();
+                    String ph=binding.evPhoneNo.getText().toString();
                     mParam2.setName(na);
                     mParam2.setEmail(em);
                     mParam2.setPhoneNo(ph);
@@ -102,14 +102,14 @@ public class InsertFragment extends Fragment {
         }
         else {
             getActivity().setTitle("Add contact");
-            button.setOnClickListener(new View.OnClickListener() {
+            binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String textName = name.getText().toString();
-                    String textEmail = email.getText().toString();
-                    String textPhone = phoneNo.getText().toString();
+                    String textName = binding.evName.getText().toString();
+                    String textEmail = binding.evEmail.getText().toString();
+                    String textPhone = binding.evPhoneNo.getText().toString();
                     if (!(textName.equals("") || textEmail.equals("") || textPhone.equals(""))) {
-                        contact = new Contact(name.getText().toString(), email.getText().toString(), phoneNo.getText().toString());
+                        contact = new Contact(binding.evName.getText().toString(), binding.evEmail.getText().toString(), binding.evPhoneNo.getText().toString());
                         insertViewModel.insert(contact);
                         getFragmentManager().popBackStackImmediate();
                     } else
@@ -117,6 +117,6 @@ public class InsertFragment extends Fragment {
                 }
             });
         }
-        return view;
+        return binding.getRoot();
     }
 }

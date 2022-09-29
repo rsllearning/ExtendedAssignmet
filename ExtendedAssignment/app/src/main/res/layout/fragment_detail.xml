@@ -40,6 +40,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="116dp"
         android:background="@drawable/ic_baseline_call_24"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvDetailPhoneNo"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -63,6 +64,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/ic_baseline_email_24"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvDetailEmail"
         app:layout_constraintTop_toBottomOf="@+id/ibCall"
         tools:ignore="MissingConstraints" />
@@ -76,7 +78,7 @@
         android:text="update"
         android:textSize="@dimen/titleFontSize"
         app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-        app:layout_constraintHorizontal_bias="0.708"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDetailEmail" />
 
@@ -84,10 +86,9 @@
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="28dp"
         android:text="delete"
         android:textSize="@dimen/titleFontSize"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnUpdate" />
+        tools:layout_editor_absoluteY="353dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

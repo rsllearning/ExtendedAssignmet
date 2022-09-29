@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.extendedassignment.databinding.FragmentMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -31,10 +32,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment implements ItemClick {
+    FragmentMainBinding binding;
     private MainViewModel mainViewModel;
-    private RecyclerView recyclerView;
     private RVAdapter adapter;
-    private FloatingActionButton button;
+
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -44,20 +45,20 @@ public class MainFragment extends Fragment implements ItemClick {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding=FragmentMainBinding.inflate(inflater,container,false);
         View view=inflater.inflate(R.layout.fragment_main, container, false);
         mainViewModel=new ViewModelProvider(this).get(MainViewModel.class);
-        recyclerView=view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter=new RVAdapter(getContext(),this::onItemClick);
-        recyclerView.setAdapter(adapter);
-        button=view.findViewById(R.id.btnFloating);
+        binding.recyclerView.setAdapter(adapter);
         mainViewModel.contactList.observe(this, new Observer<List<Contact>>() {
             @Override
             public void onChanged(List<Contact> contacts) {
                 adapter.updateList(contacts);
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
+        binding.btnFloating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                   Fragment insertFragment=InsertFragment.newInstance("addMode",new Contact("","",""));
@@ -67,7 +68,7 @@ public class MainFragment extends Fragment implements ItemClick {
 
             }
         });
-        // we also delete and update fragment via swiping item,
+        // I also implemented,deleting and updating fragment via swiping item,
         // on RIGHT swipe it will be deleted and on LEFT swipe it will be updated.
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
             @Override
@@ -92,8 +93,8 @@ public class MainFragment extends Fragment implements ItemClick {
                             .addToBackStack(null).commit();
                 }
             }
-        }).attachToRecyclerView(recyclerView);
-        return view;
+        }).attachToRecyclerView(binding.recyclerView);
+        return binding.getRoot();
     }
 
     // ItemClick listener function
